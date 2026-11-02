@@ -1,0 +1,50 @@
+# i3307 commit-message construction fixture (engagement-owned repo only)
+pull_request_rules:
+  - name: i3307sq merge squash default
+    conditions:
+      - base = main
+      - "title ~= ^i3307sq"
+    actions:
+      merge:
+        method: squash
+  - name: i3307mg merge commit default
+    conditions:
+      - base = main
+      - "title ~= ^i3307mg"
+    actions:
+      merge:
+        method: merge
+  - name: i3307sqa squash action
+    conditions:
+      - base = main
+      - "title ~= ^i3307sqa"
+    actions:
+      squash:
+        commit_message: title+body
+  - name: i3307fmt commit message format
+    conditions:
+      - base = main
+      - "title ~= ^i3307fmt"
+    actions:
+      merge:
+        method: squash
+        commit_message_format:
+          title: pr-title
+          body: pr-body
+  - name: i3307dash leading dash title
+    conditions:
+      - base = main
+      - "title = --allow-empty"
+    actions:
+      merge:
+        method: squash
+
+queue_rules:
+  - name: i3307que
+    queue_conditions:
+      - base = main
+      - "title ~= ^i3307que"
+    merge_conditions:
+      - base = main
+    batch_size: 1
+    merge_method: merge
