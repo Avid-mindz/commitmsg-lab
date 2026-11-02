@@ -1,9 +1,18 @@
-# i3307 commit-message construction fixture (engagement-owned repo only)
+# i3307/i3570 commit-message construction fixture (engagement-owned repo only)
 pull_request_rules:
+  - name: i3307sqa squash action title+body
+    conditions:
+      - base = main
+      - "title ~= ^i3307sqa"
+    actions:
+      squash:
+        commit_message: title+body
   - name: i3307sq merge squash default
     conditions:
       - base = main
       - "title ~= ^i3307sq"
+      - "title != i3307sqa"
+      - "-title ~= ^i3307sqa"
     actions:
       merge:
         method: squash
@@ -14,13 +23,6 @@ pull_request_rules:
     actions:
       merge:
         method: merge
-  - name: i3307sqa squash action
-    conditions:
-      - base = main
-      - "title ~= ^i3307sqa"
-    actions:
-      squash:
-        commit_message: title+body
   - name: i3307fmt commit message format
     conditions:
       - base = main
